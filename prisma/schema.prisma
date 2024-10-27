@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------- User model and relations -----------------
+model User {
+  id                String            @id @default(uuid())
+  name              String
+  email             String            @unique
+  password          String
+  role              Role              @default(CLIENT)
+  is_active         Boolean           @default(false)
+  created_at        DateTime          @default(now())
+  updated_at        DateTime          @updatedAt
+  deleted_at        DateTime?
+  verification_code VerificationCode?
+  addresses         Address[]
+
+  @@map("users")
+}
+
+model VerificationCode {
+  id         String    @id @default(uuid())
+  code       String
+  user_id    String    @unique
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("verification_codes")
+}
+
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+model Address {
+  id      String @id @default(uuid())
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id String @unique
+  state   String
+  city    String
+  street  String
+  number  String
+  cep     String
+
+  @@map("addresses")
+}
+
+// ----------------- Editorial model -----------------
+model Editorial {
+  id           String    @id @default(uuid())
+  name         String
+  phone_number String
+  books        Book[]
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  deleted_at   DateTime?
+
+  @@map("editorials")
+}
+
+// ----------------- Book model -----------------
+model Book {
+  id           String     @id @default(uuid())
+  title        String
+  description  String
+  author       String
+  editorial    Editorial  @relation(fields: [editorial_id], references: [id])
+  editorial_id String
+  price        Float
+  inventory    Int
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @updatedAt
+  categories   Category[]
+  finishing    Finishing
+
+  @@map("books")
+}
+
+enum Finishing {
+  HARDCOVER
+  PAPERBACK
+  EBOOK
+}
+
+enum Category {
+  FICTION
+  SCIENCE_FICTION
+  MYSTERY
+  THRILLER
+  ROMANCE
+  HORROR
+}

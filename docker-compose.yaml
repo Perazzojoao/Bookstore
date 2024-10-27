@@ -1,0 +1,88 @@
+name: auth_app
+services:
+  auth-service:
+    container_name: auth-service
+    image: perazzojoao/auth_app-auth-service:latest
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=postgres
+      - GRPC_AUTH_PORT=8000
+    ports:
+      - 8000:8000
+    networks:
+      - bookstore_app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mail-service:
+        condition: service_started
+    restart: unless-stopped
+    deploy:
+      mode: replicated
+      replicas: 1
+      
+  mail-service:
+    container_name: mail-service
+    image: perazzojoao/auth_app-mail-service:latest
+    env_file:
+      - .env
+    environment:
+      - GRPC_MAIL_PORT=8000
+    ports:
+      - 8001:8000
+    networks:
+      - bookstore_app
+    restart: unless-stopped
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  postgres:
+    container_name: postgres
+    image: 'postgres'
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    networks:
+      - bookstore_app
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres/postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    env_file:
+      - .env
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+      - '54321:80'
+    networks:
+      - bookstore_app
+    volumes:
+      - ./postgres/pgadmin-data:/var/lib/pgadmin/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  bookstore_app:
+    name: bookstore_app-Network
+    driver: bridge
+
+volumes:
+  postgres:
