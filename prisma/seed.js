@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 async function main() {
-  const seedSQL = fs.readFileSync(path.join(__dirname, 'editorial_seed.sql'), 'utf-8');
+  const seedSQL = fs.readFileSync(path.join(__dirname, 'seeds/editorial_seed.sql'), 'utf-8');
   await prisma.$executeRawUnsafe(seedSQL);
 }
 

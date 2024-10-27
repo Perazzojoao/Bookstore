@@ -9,7 +9,7 @@ datasource db {
 
 // ----------------- User model and relations -----------------
 model User {
-  id                String            @id @default(uuid())
+  id                String            @id @default(uuid()) @db.Uuid
   name              String
   email             String            @unique
   password          String
@@ -25,9 +25,9 @@ model User {
 }
 
 model VerificationCode {
-  id         String    @id @default(uuid())
+  id         String    @id @default(uuid()) @db.Uuid
   code       String
-  user_id    String    @unique
+  user_id    String    @unique @db.Uuid
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   deleted_at DateTime?
@@ -42,9 +42,9 @@ enum Role {
 }
 
 model Address {
-  id      String @id @default(uuid())
+  id      String @id @default(uuid()) @db.Uuid
   user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user_id String @unique
+  user_id String @unique @db.Uuid
   state   String
   city    String
   street  String
@@ -56,7 +56,7 @@ model Address {
 
 // ----------------- Editorial model -----------------
 model Editorial {
-  id           String    @id @default(uuid())
+  id           String    @id @default(uuid()) @db.Uuid
   name         String
   phone_number String
   books        Book[]
@@ -69,12 +69,12 @@ model Editorial {
 
 // ----------------- Book model -----------------
 model Book {
-  id           String     @id @default(uuid())
+  id           String     @id @default(uuid()) @db.Uuid
   title        String
   description  String
   author       String
   editorial    Editorial  @relation(fields: [editorial_id], references: [id])
-  editorial_id String
+  editorial_id String     @db.Uuid
   price        Float
   inventory    Int
   created_at   DateTime   @default(now())
