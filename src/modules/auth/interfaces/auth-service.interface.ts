@@ -9,7 +9,7 @@ export interface UserRequest {
   name: string
   email: string
   password: string
-  role: Role
+  role?: Role
 }
 
 export interface User {
@@ -69,7 +69,7 @@ export interface ResetPasswordResponse {
   message: string
 }
 
-export interface AuthService {
+export interface GrpcAuthService {
   CreateUser(data: UserRequest): Observable<User>;
   ValidateUser(data: UserRequest): Observable<UserValidated>;
   JwtParse(data: Jwt): Observable<User>;
@@ -80,4 +80,4 @@ export interface AuthService {
 }
 
 export const AUTH_PACKAGE = 'auth'
-export const USER_SERVICE_NAME = 'AuthService'
+export const AUTH_SERVICE_NAME = 'AuthService'
