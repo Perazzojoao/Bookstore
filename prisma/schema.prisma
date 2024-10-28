@@ -15,23 +15,24 @@ model User {
   password          String
   role              Role              @default(CLIENT)
   is_active         Boolean           @default(false)
+  verification_code VerificationCode?
+  addresses         Address[]
+
   created_at        DateTime          @default(now())
   updated_at        DateTime          @updatedAt
   deleted_at        DateTime?
-  verification_code VerificationCode?
-  addresses         Address[]
 
   @@map("users")
 }
 
 model VerificationCode {
-  id         String    @id @default(uuid()) @db.Uuid
+  id         String   @id @default(uuid()) @db.Uuid
   code       String
-  user_id    String    @unique @db.Uuid
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  deleted_at DateTime?
-  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    String   @unique @db.Uuid
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("verification_codes")
 }
@@ -42,14 +43,17 @@ enum Role {
 }
 
 model Address {
-  id      String @id @default(uuid()) @db.Uuid
-  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user_id String @unique @db.Uuid
-  state   String
-  city    String
-  street  String
-  number  String
-  cep     String
+  id         String   @id @default(uuid()) @db.Uuid
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id    String   @unique @db.Uuid
+  state      String
+  city       String
+  street     String
+  number     String
+  cep        String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("addresses")
 }
@@ -60,6 +64,7 @@ model Editorial {
   name         String
   phone_number String
   books        Book[]
+
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
   deleted_at   DateTime?
@@ -78,10 +83,11 @@ model Book {
   editorial_id String     @db.Uuid
   price        Float
   inventory    Int
-  created_at   DateTime   @default(now())
-  updated_at   DateTime   @updatedAt
   categories   Category[]
   finishing    Finishing
+
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @updatedAt
 
   @@map("books")
 }
