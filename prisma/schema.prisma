@@ -72,6 +72,7 @@ model Book {
   id           String     @id @default(uuid()) @db.Uuid
   title        String
   description  String
+  image        String
   author       String
   editorial    Editorial  @relation(fields: [editorial_id], references: [id])
   editorial_id String     @db.Uuid
