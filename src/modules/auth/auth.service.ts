@@ -37,22 +37,22 @@ export class AuthService implements GrpcAuthService {
     return this.authservice.ValidateUser(data);
   }
   JwtParse(data: Jwt): Observable<User> {
-    throw new Error('Method not implemented.');
+    return this.authservice.JwtParse(data);
   }
   ActivateUser(data: VerificationCodeRequest): Observable<UserResponse> {
-    throw new Error('Method not implemented.');
+    return this.authservice.ActivateUser(data);
   }
   ResendVerificationCode(
     data: ResendVerificationCodeRequest,
   ): Observable<ResendVerificationCodeResponse> {
-    throw new Error('Method not implemented.');
+    return this.authservice.ResendVerificationCode(data);
   }
   SendResetPassword(
     data: SendResetPasswordRequest,
   ): Observable<SendResetPasswordResponse> {
-    throw new Error('Method not implemented.');
+    return this.authservice.SendResetPassword(data);
   }
   ResetPassword(data: ResetPasswordRequest): Observable<ResetPasswordResponse> {
-    throw new Error('Method not implemented.');
+    return this.authservice.ResetPassword(data);
   }
 }

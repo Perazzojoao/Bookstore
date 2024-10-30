@@ -24,44 +24,55 @@ export class AuthController extends DefaultHttpResponse {
   @Post('register')
   async register(@Body() user: UserRequest) {
     const obs = this.authService.CreateUser(user);
-    return this.observableHandler(obs, 'User created successfully', HttpStatus.CREATED);
+    return this.observableHandler(
+      obs,
+      'User created successfully',
+      HttpStatus.CREATED,
+    );
   }
 
   @Post('login')
-  @HttpCode(200)
-  login(@Body() loginDto: UserRequest): Observable<UserValidated> {
-    return this.authService.ValidateUser(loginDto);
+  login(@Body() loginDto: UserRequest) {
+    const obs = this.authService.ValidateUser(loginDto);
+    return this.observableHandler(
+      obs,
+      'User logged in successfully',
+    );
   }
 
   @Post('activate')
-  @HttpCode(200)
-  activateUser(
-    @Body() user: VerificationCodeRequest,
-  ): Observable<UserResponse> {
-    return this.authService.ActivateUser(user);
+  activateUser(@Body() user: VerificationCodeRequest) {
+    const obs = this.authService.ActivateUser(user);
+    return this.observableHandler(
+      obs,
+      'User activated successfully',
+    );
   }
 
   @Post('resend-code')
-  @HttpCode(200)
-  resendCode(
-    @Body() user: ResendVerificationCodeRequest,
-  ): Observable<ResendVerificationCodeResponse> {
-    return this.authService.ResendVerificationCode(user);
+  resendCode(@Body() user: ResendVerificationCodeRequest) {
+    const obs = this.authService.ResendVerificationCode(user);
+    return this.observableHandler(
+      obs,
+      'Code resent successfully',
+    );
   }
 
   @Post('send-reset-password')
-  @HttpCode(200)
-  sendResetPassword(
-    @Body() user: SendResetPasswordRequest,
-  ): Observable<SendResetPasswordResponse> {
-    return this.authService.SendResetPassword(user);
+  sendResetPassword(@Body() user: SendResetPasswordRequest) {
+    const obs = this.authService.SendResetPassword(user);
+    return this.observableHandler(
+      obs,
+      'Reset password code sent successfully',
+    );
   }
 
   @Post('reset-password')
-  @HttpCode(200)
-  resetPassword(
-    @Body() user: ResetPasswordRequest,
-  ): Observable<ResetPasswordResponse> {
-    return this.authService.ResetPassword(user);
+  resetPassword(@Body() user: ResetPasswordRequest) {
+    const obs = this.authService.ResetPassword(user);
+    return this.observableHandler(
+      obs,
+      'Password reseted successfully',
+    );
   }
 }
