@@ -39,7 +39,7 @@ export interface Jwt {
 
 export interface VerificationCodeRequest {
   code: string
-  userId: string
+  email: string
 }
 
 export interface ResendVerificationCodeRequest {
