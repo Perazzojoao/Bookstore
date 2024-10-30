@@ -1,9 +1,7 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
-import { CreateUserDto } from './dto/create-user.dto';
 import {
-  User,
   UserValidated,
   VerificationCodeRequest,
   UserResponse,
@@ -13,21 +11,25 @@ import {
   SendResetPasswordResponse,
   ResetPasswordRequest,
   ResetPasswordResponse,
+  UserRequest,
 } from './interfaces/auth-service.interface';
-import { LogInDto } from './dto/login-user.dto';
+import { DefaultHttpResponse } from 'src/lib/default-http-response';
 
-@Controller()
-export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+@Controller('auth')
+export class AuthController extends DefaultHttpResponse {
+  constructor(private readonly authService: AuthService) {
+    super();
+  }
+
   @Post('register')
-  @HttpCode(200)
-  register(@Body() user: CreateUserDto): Observable<User> {
-    return this.authService.CreateUser(user);
+  async register(@Body() user: UserRequest) {
+    const obs = this.authService.CreateUser(user);
+    return this.observableHandler(obs, 'User created successfully', HttpStatus.CREATED);
   }
 
   @Post('login')
   @HttpCode(200)
-  login(@Body() loginDto: LogInDto): Observable<UserValidated> {
+  login(@Body() loginDto: UserRequest): Observable<UserValidated> {
     return this.authService.ValidateUser(loginDto);
   }
 

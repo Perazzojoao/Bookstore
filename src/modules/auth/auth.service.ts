@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import {
   AUTH_PACKAGE,
   GrpcAuthService,
@@ -31,10 +31,10 @@ export class AuthService implements GrpcAuthService {
   }
 
   CreateUser(data: UserRequest): Observable<User> {
-    throw new Error('Method not implemented.');
+    return this.authservice.CreateUser(data);
   }
   ValidateUser(data: UserRequest): Observable<UserValidated> {
-    throw new Error('Method not implemented.');
+    return this.authservice.ValidateUser(data);
   }
   JwtParse(data: Jwt): Observable<User> {
     throw new Error('Method not implemented.');
