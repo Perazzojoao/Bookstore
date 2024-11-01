@@ -26,9 +26,8 @@ export function Login() {
                 />
                 
                 <button 
-                    type="submit" 
-                    style={{ background: 'linear-gradient(90deg, #A3FFAC, #8A2BE2)' }}  
-                    className="mt-6 text-white rounded-2xl p-4 w-2/4 font-serif text-lg transition duration-300 hover:opacity-80"
+                    type="submit"
+                    className="mt-6  bg-gradient-to-r from-green-400 to-purple-600  text-white rounded-2xl p-4 w-2/4 font-serif text-lg transition duration-300 hover:opacity-80"
                 >
                     Entrar
                 </button>
