@@ -31,6 +31,14 @@ export function Registro() {
                     required
                 />
 
+                <label htmlFor="senha2" className="block m-3  text-2xl font-sans text-black">Repita a senha:</label>
+                <input
+                    type="password"
+                    id="senha2"
+                    className="border-2 p-3 mb-4 w-3/5 focus:outline-none focus:border-purple-800 text-black rounded-lg"
+                    required
+                />
+
                 <div className="flex justify-center">
                     <button type="submit" className="bg-gradient-to-r from-green-400 to-purple-600 text-white rounded-2xl m-4 p-5  w-1/3 max-w-xs text-xl">Cadastrar</button>
                 </div>
