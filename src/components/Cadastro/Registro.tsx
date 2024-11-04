@@ -42,6 +42,8 @@ export function Registro() {
                 <div className="flex justify-center">
                     <button type="submit" className="bg-gradient-to-r from-green-400 to-purple-600 text-white rounded-2xl m-4 p-5  w-1/3 max-w-xs text-xl">Cadastrar</button>
                 </div>
+
+                <span className="text-black justify-center items-center flex m-3 hover:text-purple-800"><a href="/login">Ja tem uma conta? <strong>clique aqui</strong></a></span>
             </form>
         </div>
     );
