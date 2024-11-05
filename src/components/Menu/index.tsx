@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SearchBar from "./SearchBar";
+import Novidades from "./Novidades";
 
 const Menu = () => {
   return (
@@ -13,8 +14,9 @@ const Menu = () => {
           <Link href="/category/aventura" className="rounded-lg px-12 py-2 bg-zinc-200 text-zinc-800 hover:bg-zinc-400 ease-in-out font-semibold">Cique aqui!</Link>
         </section>
 
-        <section className="flex flex-col gap-5 justify-center items-center px-2 sm:px-4 py-6 bg-gradient-to-b from-green-300 w-full mt-14">
+        <section className="flex flex-col gap-5 justify-center items-center px-2 sm:px-4 pt-6 pb-14 bg-gradient-to-b from-green-600 w-full mt-14">
           <h3 className="text-2xl">Confira as Novidades</h3>
+          <Novidades />
         </section>
       </div>
     </main>
