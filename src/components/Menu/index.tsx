@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SearchBar from "./SearchBar";
+import SearchBar from "../SearchBar";
 import Novidades from "./Novidades";
 
 const Menu = () => {
