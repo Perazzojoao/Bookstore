@@ -2,7 +2,7 @@
 
 import { SearchBookContext } from "@/context/search_books.contex";
 import { useRouter } from "next/navigation";
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 
 const SearchBar = () => {
   const [search, setSearch] = useState('');
@@ -14,6 +14,10 @@ const SearchBar = () => {
     setSearchTitle(search);
     router.push('/books');
   }
+
+  useEffect(() => {
+    setSearch(searchTitle);
+  }, [searchTitle]);
 
   return (
     <div className="w-full px-4 sm:px-0">
