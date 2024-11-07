@@ -8,8 +8,9 @@ const Books = () => {
         <h1 className="text-4xl sm:text-6xl font-bold">BookStore</h1>
         <SearchBar />
 
-        <section>
-          <h2>Lista de Livros</h2>
+        <section className="mt-5 flex flex-col justify-center items-center gap-4">
+          <h2 className="text-center font-semibold text-2xl">Lista de Livros</h2>
+          <div className="inset-0 bg-gradient-to-r from-transparent via-green-600 to-transparent h-[2px] w-5/6 mb-8"></div>
           <BookList />
         </section>
       </div>

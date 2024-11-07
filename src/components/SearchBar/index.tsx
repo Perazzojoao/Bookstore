@@ -17,8 +17,11 @@ const SearchBar = () => {
 
   return (
     <div className="w-full px-4 sm:px-0">
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Estou procurando por..." defaultValue={searchTitle} className="w-full px-4 py-2 rounded-lg text-zinc-800 placeholder:text-zinc-800" onChange={(e) => setSearch(e.target.value)} />
+      <form onSubmit={handleSubmit} className="flex gap-3">
+        <input type="text" placeholder="Estou procurando por..." defaultValue={searchTitle} className="w-full px-4 py-2 rounded-lg text-zinc-800 placeholder:text-zinc-800 grow" onChange={(e) => setSearch(e.target.value)} />
+        <button type="submit" className="bg-green-600 hover:bg-green-700 ease-in-out rounded-md px-4 py-2">
+          Buscar
+        </button>
       </form>
     </div>
   );
