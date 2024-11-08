@@ -1,5 +1,25 @@
 name: auth_app
 services:
+  bookstore:
+    container_name: bookstore
+    build: .
+    env_file:
+      - .env
+    environment:
+      - AUTH_SERVICE_URL=auth-service:8000
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
+    ports:
+      - 3000:3000
+    networks:
+      - bookstore_app
+    depends_on:
+      auth-service:
+        condition: service_started
+    restart: unless-stopped
+    deploy:
+      mode: replicated
+      replicas: 1
+
   auth-service:
     container_name: auth-service
     image: perazzojoao/auth_app-auth-service:latest
@@ -21,7 +41,7 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      
+
   mail-service:
     container_name: mail-service
     image: perazzojoao/auth_app-mail-service:latest
