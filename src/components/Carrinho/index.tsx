@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import Link from 'next/link'; // Importando o Link do Next.js
 
 interface CartItem {
   id: number;
@@ -32,7 +33,7 @@ const CartPage: React.FC = () => {
         <h2 className="text-black font-bold mb-6 text-center font-mono text-4xl">Carrinho</h2>
 
         {cart.length === 0 ? (
-          <p className="text-center text-xl text-gray-700">Your cart is empty.</p>
+          <p className="text-center text-xl text-gray-700">Seu carrinho está vazio.</p>
         ) : (
           <ul className="space-y-4">
             {cart.map(item => (
@@ -49,7 +50,7 @@ const CartPage: React.FC = () => {
                 <button
                   onClick={() => removeFromCart(item.id)}
                   className="bg-gradient-to-r from-green-400 to-purple-600 text-white font-semibold rounded-lg px-4 py-2 transition duration-200">
-                  Remove
+                  Remover
                 </button>
               </li>
             ))}
@@ -69,11 +70,11 @@ const CartPage: React.FC = () => {
 
         {cart.length > 0 && (
           <div className="flex justify-center mt-8">
-            <button
-              onClick={() => alert("Indo para pagamento...")}
+            <Link
+              href="/pagamento"  // Usando Link para navegação
               className="bg-gradient-to-r from-green-400 to-purple-600 text-white font-semibold rounded-lg px-6 py-3 text-lg transition duration-200">
               Ir para pagamento
-            </button>
+            </Link>
           </div>
         )}
       </div>
